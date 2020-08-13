@@ -34,14 +34,13 @@ side-facing camera are prefixed with `/head_camera`.
 
 - [] Update model from Turtlebot2 to Turtlebot3 - ideally we can set up a downward facing camera, and the 2D lidar.
 - [] Finalize a strategy for providing students access to the virtual labs.
-	- [] Set up a server with ROS that students can access via SSH. 
-		- [] Need to find a suitable server machine that students can access from home
-	- [] Testing gzweb for gazebo visualization via a web browser
+	- [x] Set up a server with ROS that students can access via SSH: we will be using the Myhal PCs for this
+	- [] Testing gzweb for gazebo visualization via a web browser 
 	- [] Testing other graphical ssh options like X11 forwarding
 - [x] Figure out how to add custom 'tape' patterns on the ground plane for path-following purposes
 - [] Create environments for each lab:
 	- [] Lab 1 - Turtlebot3 Intro:
-		- [] Gazebo world: Vvry simple world needed - add a few features to test out the robot in simulation
+		- [] Gazebo world: Very simple world needed - add a few features to test out the robot in simulation
 		- [] Lab report update to introduce the Gazebo simulation
 
 	- [] Lab 2 - Pose-to-Pose Control:
