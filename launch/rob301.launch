@@ -1,5 +1,5 @@
 <launch>
-  <arg name="world_file"  default="$(find rob1514_simulation)/worlds/rob301.world"/>
+  <arg name="world_file"  default="$(find rob301_simulation)/worlds/rob301.world"/>
 
   <!-- Turtlebot parameters -->
   <arg name="base"      value="kobuki"/> <!-- create, roomba -->
@@ -13,12 +13,13 @@
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="use_sim_time" value="true"/>
     <arg name="debug" value="true"/> <!-- for some reason required? -->
-    <arg name="gui" value="$(arg gui)" />
+    <arg name="gui" value="false"/> #"$(arg gui)" />
+    <arg name="headless" value="true"/>
     <arg name="world_name" value="$(arg world_file)"/>
   </include>
 
   <!-- Launch Turtlebot model -->
-  <include file="$(find rob1514_simulation)/launch/turtlebot.launch">
+  <include file="$(find rob301_simulation)/launch/turtlebot.launch">
     <arg name="base" value="$(arg base)"/>
     <arg name="stacks" value="$(arg stacks)"/>
     <arg name="3d_sensor" value="$(arg 3d_sensor)"/>

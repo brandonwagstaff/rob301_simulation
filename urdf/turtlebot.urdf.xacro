@@ -6,7 +6,7 @@
   <xacro:include filename="$(find turtlebot_description)/urdf/sensors/astra.urdf.xacro"/>
 
   <!-- Mount additional side-facing camera on top. -->
-  <xacro:include filename="$(find rob1514_simulation)/urdf/camera.urdf.xacro"/>
+  <xacro:include filename="$(find rob301_simulation)/urdf/camera.urdf.xacro"/>
 
   <kobuki/>
   <stack_hexagons parent="base_link"/>
