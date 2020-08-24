@@ -1,3 +1,7 @@
+### Before running, to remove the requirement of multiple pwd entries, run:
+### sudo echo 'user ALL=(ALL:ALL) NOPASSWD:/home/rob301/test.sh' >> /etc/sudoers
+
+
 cd ~/
 sudo apt-get -y update
 sudo apt-get -y upgrade
