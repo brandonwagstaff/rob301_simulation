@@ -40,6 +40,7 @@ cd ~/catkin_ws
 catkin_make
 
 ## gzweb
+source ~/.bashrc
 sudo apt-get install -y gazebo7 libgazebo7-dev
 sudo apt-get install -y libjansson-dev nodejs-legacy libboost-dev imagemagick libtinyxml-dev mercurial cmake build-essential python-software-properties
 curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash -
