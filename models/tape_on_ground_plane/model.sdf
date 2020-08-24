@@ -1,7 +1,7 @@
 <?xml version="2.0"?>
 <sdf version="1.4">
-<model name="byu">
-        <static>1</static>
+<model name='tape_on_ground_plane'>
+      <static>1</static>
       <link name='link'>
         <collision name='collision'>
           <geometry>
@@ -32,12 +32,12 @@
           <geometry>
             <plane>
               <normal>0 0 1</normal>
-              <size>10 10</size>
+              <size>5 5</size>
             </plane>
           </geometry>
           <material>
             <script>
-              <uri>model://tape_on_ground_plane/materials/scripts/tape.material</uri>
+              <uri>file://media/materials/scripts/tape.material</uri>
               <name>tape/ground</name>
             </script>
           </material>
@@ -46,5 +46,5 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-  </model>
+    </model>
 </sdf>

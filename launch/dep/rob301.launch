@@ -15,7 +15,7 @@
     <arg name="debug" value="true"/> <!-- for some reason required? -->
     <arg name="gui" value="false"/> #"$(arg gui)" />
     <arg name="headless" value="true"/>
-    <arg name="world_name" value="$(arg world_file)"/>
+    #<arg name="world_name" value="$(arg world_file)"/>
   </include>
 
   <!-- Launch Turtlebot model -->
