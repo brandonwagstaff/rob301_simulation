@@ -14,9 +14,9 @@
       <direction>-0.5 0.5 -1</direction>
     </light>
     
-    <!-- A ground arrow -->
+    <!-- A ground plane -->
     <include>
-      <uri>model://arrow</uri>
+      <uri>model://tape_on_ground_plane</uri>
     </include>
 
     <gravity>0 0 -9.8</gravity>
