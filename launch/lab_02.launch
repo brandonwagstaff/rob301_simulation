@@ -5,7 +5,7 @@
   <arg name="z_pos" default="0.0"/>
 
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <!-- <arg name="world_name" value =  "$(find rob301_simulation)/Maps/yellow_mark.world"/> -->
+    <arg name="world_name" value =  "$(find rob301_simulation)/Maps/lab02_ground_mark.world"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
     <arg name="gui" value="false"/>
@@ -17,8 +17,8 @@
 
 
   <!-- turtlebot3_teleop_key already has its own built in velocity smoother -->
-  <node pkg="rob301_simulation" type="lab01_motor.py" name="lab01_motor" output="screen">
-  </node>
+  <!-- <node pkg="turtlebot3_teleop" type="turtlebot3_teleop_key" name="turtlebot3_teleop_keyboard"  output="screen">
+  </node> -->
 
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model turtlebot3 -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
 </launch>
