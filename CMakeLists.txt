@@ -151,7 +151,7 @@ include_directories(
 #############
 
 catkin_install_python(PROGRAMS
-  nodes/talker.py
+  nodes/lab01_odom.py
   nodes/lab01_motor.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
