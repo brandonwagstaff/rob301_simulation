@@ -10,8 +10,8 @@
     <arg name="world_name" value="$(arg world_file)"/>
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="true"/>
-    <arg name="headless" value="false"/>
+    <arg name="gui" value="false"/>
+    <arg name="headless" value="true"/>
     <arg name="debug" value="false"/>
   </include>
 
@@ -19,7 +19,7 @@
     <param name="gazebo/enable_ros_network" value="$(arg enable_ros_network)" />
   </group>
 
-  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find turtlebot3_description)/urdf/turtlebot3_$(arg model).urdf.xacro" />
+  <param name="robot_description" command="$(find xacro)/xacro --inorder $(find rob301_simulation)/urdf/turtlebot3_$(arg model).urdf.xacro" />
 
   <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-urdf -model turtlebot3 -x $(arg x_pos) -y $(arg y_pos) -z $(arg z_pos) -param robot_description" />
 </launch>

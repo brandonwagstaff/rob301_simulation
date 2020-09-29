@@ -16,7 +16,7 @@
     
     <!-- A ground arrow--> 
     <include>
-      <uri>model://tape_on_ground_plane</uri>
+      <uri>model://lab_3_test_course</uri>
     </include>
 
     <gravity>0 0 -9.8</gravity>
