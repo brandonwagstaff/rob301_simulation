@@ -12,20 +12,15 @@ def get_yaw_from_quarternion(q):
 
 def callback(odom_data):
 	'''TODO: complete the call back function for subscriber'''
-	point = odom_data.pose.pose.position 
-	quart = odom_data.pose.pose.orientation 
-	theta=get_yaw_from_quarternion(quart)
-	cur_pose = (point.x, point.y, theta) 
-	rospy.loginfo(cur_pose)
+
+	pass
 
 
 def main():
 	try:
 		rospy.init_node('odometry')
 		'''TODO: initialize the subscriber of odometery here'''
-		rate = rospy.Rate(10) 
-		listen = rospy.Subscriber('odom', Odometry, callback, queue_size=1)
-		rate.sleep()
+
 		rospy.spin()
 	except rospy.ROSInterruptException:
 		pass
