@@ -25,4 +25,5 @@
 
   <node name="scan_angle" pkg="rob301_simulation" type="get_scan_angle.py" output="log" />
   <node name="line_detector" pkg="rob301_simulation" type="line_detector.py" output="log" />
+  <node name="line_detector" pkg="rob301_simulation" type="line_detector.py" output="log" />
 </launch>
