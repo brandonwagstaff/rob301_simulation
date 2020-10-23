@@ -100,7 +100,7 @@
           <pose frame=''>0 0 0 0 0 0</pose>
           <geometry>
             <cylinder>
-              <radius>0.4</radius>
+              <radius>0.08</radius>
               <length>2</length>
             </cylinder>
           </geometry>
@@ -141,7 +141,7 @@
         <kinematic>0</kinematic>
         <gravity>1</gravity>
       </link>
-      <pose frame=''>1 1 0 0 0 0</pose>
+      <pose frame=''>2.25 1 0 0 0 0</pose>
     </model>
 
 
