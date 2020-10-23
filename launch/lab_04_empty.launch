@@ -9,8 +9,8 @@
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
     <arg name="paused" value="false"/>
     <arg name="use_sim_time" value="true"/>
-    <arg name="gui" value="false"/>
-    <arg name="headless" value="true"/>
+    <arg name="gui" value="true"/>
+    <arg name="headless" value="false"/>
     <arg name="debug" value="false"/>
     <arg name="world_name" value="$(arg world_file)"/>
   </include>
@@ -25,4 +25,5 @@
 
   <node name="scan_angle" pkg="rob301_simulation" type="get_scan_angle.py" output="log" />
   <node name="noisy_vel" pkg="rob301_simulation" type="pub_noisy_vel.py" output="log" />
+  <node name="line_detector" pkg="rob301_simulation" type="line_detector.py" output="log" />
 </launch>
