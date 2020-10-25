@@ -25,7 +25,7 @@ def get_scan():
         y_range = np.copy(in_range)*np.sin(np.copy(angles)) #computes the y-distance to each measurement
 #        print(x_range)
         
-        angles = np.where(np.logical_and(np.logical_and(y_range <=1.1,y_range>=0.9)==1, in_range < 5)) #filter out measurements with ranges larger than 1.2m or y_range less than 0.5m
+        angles = np.where(np.logical_and(np.logical_and(y_range <=2,y_range>=0.9)==1, in_range < 5)) #filter out measurements with ranges larger than 1.2m or y_range less than 0.5m
 #        print(angles)
 #        print(in_range[angles])
         median_angle = np.median(angles)

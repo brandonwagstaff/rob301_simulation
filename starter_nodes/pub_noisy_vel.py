@@ -64,8 +64,8 @@ if __name__=="__main__":
     rospy.init_node('noisyvel')
     #cmd_publisher=rospy.Publisher('cmd_vel', Twist, queue_size=1)
     try:
-        mu_noise = -0.001
-        std_noise = 0.001
+        mu_noise = 0.008
+        std_noise = 0.003
         kf = MakeNoise(mu=mu_noise, std=std_noise)
         rospy.spin()
     except:
