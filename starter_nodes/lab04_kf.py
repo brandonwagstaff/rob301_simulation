@@ -24,7 +24,6 @@ saved_P = []
 saved_t = []
 count = 0
 
-
 def getKey():
     if os.name == 'nt':
       return msvcrt.getch()
@@ -47,14 +46,16 @@ class KalmanFilter(object):
         self.Q = Q
         self.R = R
         self.P = P_0
-        self.x = x_0
-        self.gt = 0 #initialize gt
+        self.x = float(x_0)
+        self.x_predict = self.x
+        self.P_predict = self.P
+
         self.T = T
 
         self.u = 0 # initialize the cmd_vel input
         self.phi = np.nan #initialize the measurement input
-        
-        self.state_pub = rospy.Publisher('state', String, queue_size = 1)
+        self.gt = 0
+		
 
     def cmd_callback(self, cmd_msg):
         self.u = cmd_msg.linear.x
@@ -70,22 +71,28 @@ class KalmanFilter(object):
     ## call within run_kf to update the state with the measurement 
     def predict(self, u = 0):
         rospy.loginfo("TODO: update state via the motion model, and update the covariance with the process noise")
-        return 
+        return 0
 
     ## call within run_kf to update the state with the measurement 
-    def measurement_update(self):
-        rospy.loginfo("TODO: update state when a new measurement has arrived using this function")
+    def measurement_update(self, phi):
+        if math.isnan(phi):
+            rospy.loginfo('nan received')
+            # ignore nan measurements when tower is occluded
+        else:
+            # perform measurement update
+            rospy.loginfo("TODO: update state when a new measurement has arrived using this function")
+			
         return
 
     def run_kf(self):
         current_input = self.u
         current_measurement = self.phi
         
-        ## TODO: complete this by completing self.predict() and self.measurement_update()
         self.predict(current_input)
-        self.measurement_update()
-        
+        self.measurement_update(current_measurement)
         self.state_pub.publish(str(float(self.x)))
+		
+
 
         # for plotting
         global count
@@ -94,7 +101,7 @@ class KalmanFilter(object):
         saved_gt.append(self.gt)
         saved_P.append(self.P)
         count += 1
-	
+
 
 
 if __name__=="__main__":
@@ -103,28 +110,29 @@ if __name__=="__main__":
         
     rospy.init_node('Lab4')
     try:
-        h = 1.0 #y distance to tower
-        d = 2.25 #x distance to tower (from origin)  
+        h = 1.3 #y distance to tower
+        d = 2.5 #x distance to tower (from origin)  
         
-        x_0 = 0 #initial state position
+        x_0 = 0. #initial state position
         
-        Q = 0.005 #process noise covariance
-        R = 0.001 #measurement noise covariance
+        Q = 0.005  #process noise covariance
+        R = 0.001  #measurement noise covariance
         P_0 = 1e-5 #state covariance
-        hz = 20 #frequency of KF loop
+        hz = 15 #frequency of KF loop
         T = 1.0/hz
-
-        kf = KalmanFilter(h, d, x_0, Q, R, P_0,T)
+        kf = KalmanFilter(h, d, x_0, Q, R, P_0, T)
         kf.scan_sub = rospy.Subscriber('scan_angle', String, kf.scan_callback, queue_size=1)
         kf.cmd_sub = rospy.Subscriber('cmd_vel_noisy', Twist, kf.cmd_callback)
-        kf.gt_sub = rospy.Subscriber('odom',Odometry, kf.gt_callback)
+        kf.gt_sub = rospy.Subscriber('odom',Odometry,kf.gt_callback)
+        kf.state_pub = rospy.Publisher('state', String, queue_size = 1) #used to publish the estimated state (can subscribe to this with your pid controller)
         rospy.sleep(1)
         rate = rospy.Rate(hz)
         while not rospy.is_shutdown():
             kf.run_kf()  
             rate.sleep()
             
-    except:
+
+    except Exception as e:
         # plotting
         fig, ax = plt.subplots()
         ax.plot(saved_t, saved_x, label='est')
@@ -145,4 +153,5 @@ if __name__=="__main__":
 
     finally:
         rospy.loginfo("goodbye")
+       
 
