@@ -28,7 +28,7 @@ def getKey():
 
 class BayesLoc:
 
-    def __init__(self, P0, colourCodes,colourMap, transProbBack, transProbForward):
+    def __init__(self, P0, colourCodes, colourMap, transProbBack, transProbForward):
         self.colour_sub = rospy.Subscriber('camera_rgb', String, self.colour_callback)
         self.cmd_pub= rospy.Publisher('cmd_vel', Twist, queue_size=1)
 
@@ -61,10 +61,12 @@ class BayesLoc:
     def getSensorReading(self):
         if self.CurColour is None:
             self.waitforcolour()
-        dist = np.linalg.norm(self.colourCodes-self.CurColour,axis = 1)
-        dist += np.ones(np.shape(dist))*.01
-        prob = dist**-1
-        prob = prob/np.sum(prob)
+        prob=np.zeros(len(colourCodes))
+        '''
+        TODO: You need to compute the probability of states. You should return a 1x5 np.array
+        Hint: find the euclidean distance between the measured RGB values (self.CurColour) 
+            and the reference RGB values of each color (self.ColourCodes).
+        '''
         return prob
 
     def go_forward_one_grid(self):
@@ -72,7 +74,6 @@ class BayesLoc:
         """
         TODO: Complete this function to move forward by one grid (75cm)
         """
-    
 
     def stop(self):
         twist = Twist()
