@@ -30,7 +30,7 @@ class camera_mono(object):
         #publish the line sensor reading
         array = cv_img
         mid = len(array)//2
-        line_array = array[300:400]
+        line_array = array[400:500]
         line_array = np.mean(line_array, axis=0)
         new_array = []
         for i in range(5,len(line_array)-6):
@@ -39,7 +39,7 @@ class camera_mono(object):
         self.line_sensor_publisher.publish(str(index))
 
         #publish to camera rgb
-        color_array = rgb_cv_img[:200,:]
+        color_array = rgb_cv_img[300:400,:]
         intermediate=np.mean(color_array, axis=0)
         color=np.mean(intermediate, axis=0)
         # rospy.loginfo('r:{}, g:{}, b:{}'.format(color[0], color[1], color[2]))
