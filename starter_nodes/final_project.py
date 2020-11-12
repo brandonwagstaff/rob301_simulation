@@ -30,9 +30,10 @@ class BayesLoc:
 
     def __init__(self, P0, colourCodes, colourMap, transProbBack, transProbForward):
         self.colour_sub = rospy.Subscriber('camera_rgb', String, self.colour_callback)
+        self.line_sub = rospy.Subscriber('line_idx', String, self.line_callback)
         self.cmd_pub= rospy.Publisher('cmd_vel', Twist, queue_size=1)
 
-        self.probability = P0
+        self.probability = P0 ## initial state probability is equal for all states
         self.colourCodes = colourCodes
         self.colourMap = colourMap
         self.transProbBack = transProbBack
@@ -40,17 +41,23 @@ class BayesLoc:
         self.numStates = len(P0)
         self.statePrediction = np.zeros(np.shape(P0))
 
-        self.CurColour = None
-        self.curPos=0
-  
-        self.colorProbs = None
+        self.CurColour = None ##most recent measured colour
 
  
     def colour_callback(self, msg):
+        '''
+        callback function that receives the most recent colour measurement from the camera.
+        '''
         rgb = msg.data.replace('r:','').replace('b:','').replace('g:','').replace(' ','')
         r,g,b = rgb.split(',')
         r,g,b=(float(r), float(g),float(b))
         self.CurColour = np.array([r,g,b])
+
+    def line_callback(self, msg):
+        '''
+        TODO: Complete this with your line callback function from lab 3.
+        '''
+        return
     
 
     def waitforcolour(self):
@@ -58,40 +65,31 @@ class BayesLoc:
             if self.CurColour is not None:
                 break
 
-    def getSensorReading(self):
+    def measurement_model(self):
         if self.CurColour is None:
             self.waitforcolour()
         prob=np.zeros(len(colourCodes))
         '''
+        Measurement model p(z_k | x_k = colour) - given the pixel intensity, what's the probability that  
         TODO: You need to compute the probability of states. You should return a 1x5 np.array
         Hint: find the euclidean distance between the measured RGB values (self.CurColour) 
             and the reference RGB values of each color (self.ColourCodes).
         '''
         return prob
 
-    def go_forward_one_grid(self):
-        rospy.loginfo('going forward one grid')
-        """
-        TODO: Complete this function to move forward by one grid (75cm)
-        """
-
-    def stop(self):
-        twist = Twist()
-        self.cmd_pub.publish(twist)
-        
-
     def statePredict(self,forward):
         rospy.loginfo('predicting state')
         '''
-        TODO: Complete this function by updating self.statePrediction
+        TODO: Complete the state prediction function
         '''
 
     def stateUpdate(self):
         rospy.loginfo('updating state')
         '''
-        TODO: Complete this function by updating self.probability
-        '''
-            
+        TODO: Complete the state update function
+        '''      
+
+
 
 
 if __name__=="__main__":
@@ -99,15 +97,18 @@ if __name__=="__main__":
         settings = termios.tcgetattr(sys.stdin)
 
     # 0: Green, 1: Purple, 2: Orange, 3: Yellow, 4: Line   
-    color_maps = [0, 1, 2, 2, 0, 1, 2, 3, 0, 1, 3]
+    color_maps = [3, 0, 1, 2, 2, 0, 1, 2, 3, 0, 1] ## current map starting at cell#2 and ending at cell#12
     color_codes = [[72, 255, 72], #green
                     [255, 144, 0], #orange
                     [145,145,255], #purple
                     [255, 255, 0], #yellow 
                     [133,133,133]] #line
+
+    trans_prob_fwd = [0.1,0.9]
+    trans_prob_back = [0.2,0.8]
                  
     rospy.init_node('final_project')
-    bayesian=BayesLoc([1.0/len(color_maps)]*len(color_maps), color_codes, color_maps, [0.2,0.8],[0.1,0.9])
+    bayesian=BayesLoc([1.0/len(color_maps)]*len(color_maps), color_codes, color_maps, trans_prob_back,trans_prob_fwd)
     prob = []
     rospy.sleep(0.5)    
     state_count = 0
@@ -117,35 +118,12 @@ if __name__=="__main__":
         
         while (1):
             key = getKey()
-            if (key == '\x03'): #1.22:bayesian.curPos >= 1.6 or
+            if (key == '\x03'): 
                 rospy.loginfo('Finished!')
                 rospy.loginfo(prob)
                 break
             
-            bayesian.colorProbs = bayesian.getSensorReading()
-
-            if np.argmax(bayesian.colorProbs) == 4:
-                if prev_state !='line':
-                    rospy.loginfo('Doing line following now...')
-                '''
-                TODO: call PID line following function
-                '''
-                prev_state = 'line'
-                
-            else:         
-                bayesian.stop()
-                rospy.loginfo('doing state estimate now...')
-                rospy.sleep(3)
-
-                '''
-                TODO: call state estimation function. Complete the bayesian.go_forward function to move
-                forward for one grid.
-                '''
-                bayesian.go_forward_one_grid()   
-                bayesian.stop()
-                state_count += 1
-                rospy.sleep(3)
-                prev_state='color'
+            rospy.loginfo("TODO: complete this main loop by calling functions from BayesLoc, and adding your own high level and low level planning + control logic")
                 
     except Exception as e:
         print("comm failed:{}".format(e))
