@@ -17,7 +17,7 @@ class camera_mono(object):
         self.line_sensor_publisher = rospy.Publisher('line_idx', String ,queue_size=1)
         self.color_sensor_publisher = rospy.Publisher('camera_rgb', String ,queue_size=1)
         self.camera_subscriber = rospy.Subscriber('/camera/rgb/image_raw', Image, self.camera_callback, queue_size = 1)
-    
+
     def camera_callback(self,data):
         bridge = CvBridge()
         try:
@@ -42,8 +42,13 @@ class camera_mono(object):
         color_array = rgb_cv_img[300:400,:]
         intermediate=np.mean(color_array, axis=0)
         color=np.mean(intermediate, axis=0)
+
+        # add noise, but bound to [0, 255]
+        color_noise = np.random.normal(scale=3.0, size=3)
+        color_noisy = np.minimum(np.maximum(color + color_noise, 0), 255)
+
         # rospy.loginfo('r:{}, g:{}, b:{}'.format(color[0], color[1], color[2]))
-        self.color_sensor_publisher.publish('r:{}, g:{}, b:{}'.format(color[0], color[1], color[2]))             
+        self.color_sensor_publisher.publish('r:{}, g:{}, b:{}'.format(color_noisy[0], color_noisy[1], color_noisy[2]))
         return
 
 
