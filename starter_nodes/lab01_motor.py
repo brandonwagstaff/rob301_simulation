@@ -1,25 +1,15 @@
 #!/usr/bin/env python
 import rospy
 import math
-import time
 from geometry_msgs.msg import Twist
 from std_msgs.msg import String
 
 
-def publisher_node():
-    '''
-    TODO: complete the publisher function here
-    '''
-    pass
-
-
 def main():
+    rospy.init_node("motor_node")
 
-    try:
-        rospy.init_node('motor')
-        publisher_node()
-    except rospy.ROSInterruptException:
-        pass
+    """TODO: complete motor publishing functionality here"""
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
